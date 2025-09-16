@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
       // 更新任务，如果 _id 不存在就插入
       await collection.updateOne(
-          { _id: _id },               // 根据 _id 查找文档
+          // { _id: _id },               // 根据 _id 查找文档
           { $set: { title, checked } }, // 同时更新 title 和 checked
           { upsert: true }            // 不存在时插入
       );
