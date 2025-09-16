@@ -37,21 +37,15 @@ export default async function handler(req, res) {
         // POST 请求 → 新增或更新任务
     // ========================
     else if (req.method === "POST") {
-      const { _id, title, checked } = req.body;         // 从请求 body 获取字段
+      const { title, checked } = req.body;
 
-      // 简单校验，确保字段存在
-      if (!_id || typeof checked !== "boolean" || !title) {
+      if (!title || typeof checked !== "boolean") {
         return res.status(400).json({ error: "Invalid request body" });
       }
 
-      // 更新任务，如果 _id 不存在就插入
-      await collection.updateOne(
-          // { _id: _id },               // 根据 _id 查找文档
-          { $set: { title, checked } }, // 同时更新 title 和 checked
-          { upsert: true }            // 不存在时插入
-      );
+      const result = await collection.insertOne({ title, checked });
 
-      return res.status(200).json({ success: true });
+      return res.status(200).json({ success: true, _id: result.insertedId });
     }
 
         // ========================
