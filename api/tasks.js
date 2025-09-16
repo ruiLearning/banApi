@@ -19,8 +19,8 @@ clientPromise = global._mongoClientPromise;
 export default async function handler(req, res) {
   try {
     const client = await clientPromise;
-    const db = client.db("hexo_todo");   // 数据库名，可自定义
-    const collection = db.collection("tasks");
+    const db = client.db("test");   // 数据库名，可自定义
+    const collection = db.collection("todo");
 
     if (req.method === "GET") {
       // 获取任务
