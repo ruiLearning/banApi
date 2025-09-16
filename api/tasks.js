@@ -28,10 +28,9 @@ export default async function handler(req, res) {
       res.status(200).json(tasks);
     } else if (req.method === "POST") {
       // 更新任务状态
-      const { id, checked } = req.body;
+      const { id, checked, title } = req.body;
       await collection.updateOne(
-        { _id: id },
-        { $set: { checked } },
+        { _id: id }, { $set: { title } }, { $set: { checked } },
         { upsert: true }
       );
       res.status(200).json({ success: true });
